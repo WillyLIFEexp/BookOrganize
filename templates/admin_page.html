@@ -1,0 +1,94 @@
+{% extends "bootstrap/base.html" %}
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+    <div class="input-group">
+    	<div class="input-group-prepend">
+			<span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+  		</div>
+		<input type="text" placeholder="請輸入書名..." id="search_box">
+	</div>
+    <div>
+		<button type="button" class="btn btn-outline-light" id="add_new_book"><i class="fa fa-plus"></i></button>
+	</div>
+</nav>
+<!-- this is for background -->
+<div class="wrapper bg-dark" id="admin">
+	<!-- this is the center block -->
+	<div class='container_thin'>
+
+		<div class='row' style='padding: 1% 5%'>
+			<ul class="nav nav-tabs bg-dark" id='tag_list' >
+                {% for cate_name in all_category %}
+				{% if cate_name[0] == all_category[0][0] %}
+                <li class="tag_item"><a href="#" class="nav-link active">{{cate_name[0]}}</a></li>
+				{% else %}
+				<li class="tag_item"><a href="#" class="nav-link text-light">{{cate_name[0]}}</a></li>
+                {% endif %}
+				{% endfor %}
+			</ul>
+
+			<div id='replace_all' style='width:100%'>
+				<div id='forcards'>
+                    {% for book in all_books %}
+					<div class="col-xs-6 col-sm-3 col-md-6 col-lg-4 card_style">
+                        <div id="{{book[0]}}">
+						<span class='card_txt'> {{book[1]}}{{book[6]}} - {{book[2]}} </span><br>
+						<span> {{book[3]}} </span><br>
+						<span> {{book[4] - book[5]}} / {{book[4]}} </span><br>
+						<span><button type="button" class="btn btn-outline-info edit">修改</button></span>
+						<span><button type="button" class="btn btn-outline-danger remove">移除</button></span>
+						</div>
+					</div>
+					{% endfor %}
+			    </div>
+
+			    <div id="forpgs">
+				    <ul class="pagination dark" id="switch_page">
+				    	<li>
+				    		<button type="button" class="btn page text-white bg-dark" aria-label="Previous"><span aria-hidden="true">&laquo;</span>
+				    	</li>
+				    	<li>
+				    		<button type="button" class="btn page text-white bg-dark current"> 1
+				    	</li>
+				    	{% for n in range(2,pages + 1) %}
+						{% if n < 11 %}
+				        	<li>
+				    			<button type="button" class="btn page text-white bg-dark"> {{n}}
+				    		</li>
+						{% else %}
+							<li>
+								<button type="button" class="btn page text-white bg-dark notshow"> {{n}}
+							</li>
+						{% endif %}
+				    	{% endfor %}
+				    	<li>
+				    		<button type="button" class="btn page text-white bg-dark" aria-label="Next"><span aria-hidden="true">&raquo;</span>
+				    	</li>
+				    </ul>
+			    </div>
+	        </div>
+		</div>
+	</div>
+</div>
+
+<!-- The Modal -->
+<div id="edit_modal">
+  <!-- Modal content -->
+	<div class="edit_modal_content bg-light">
+	</div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/new_home.css') }}">
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script src="{{ url_for('static', filename='js/all_funs.js') }}"></script>
+<script src="{{ url_for('static', filename='js/new_page.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bo_re.js') }}"></script>
+<script src="{{ url_for('static', filename='js/new_popup.js') }}"></script>
+{% endblock %}
