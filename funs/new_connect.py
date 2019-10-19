@@ -7,7 +7,7 @@ class MySql:
             host="localhost",
             user="root", password="password123",
             auth_plugin='mysql_native_password',
-            database="gunter888$book_keeper")
+            database="book_keeper")
         # host="gunter888.mysql.pythonanywhere-services.com",
         # user="gunter888", password="-------",
         # auth_plugin='mysql_native_password',
@@ -47,6 +47,18 @@ class MySql:
         only_book = self.cur.fetchall()
         self.cur.close()
         return only_book
+
+    def get_everything(self):
+        """
+        Return all data from database
+        :return:
+        """
+        self.connect_again()
+        sql_code = '''select * from combine_data'''
+        self.cur.execute(sql_code)
+        every_book = self.cur.fetchall()
+        self.cur.close()
+        return every_book
 
     def get_all_cat_tags(self):
         """
