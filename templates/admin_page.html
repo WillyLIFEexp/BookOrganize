@@ -7,9 +7,9 @@
   		</div>
 		<input type="text" placeholder="請輸入書名..." id="search_box">
 	</div>
-    <div>
+        <a class="btn btn-outline-light" style='border:none' href="/outputCSV"><i class="fa fa-file"></i></a>
+		<a class="btn btn-outline-light" style='border:none' href="{{ url_for('show_list') }}"><i class="fa fa-home"></i></a>
 		<button type="button" class="btn btn-outline-light" id="add_new_book"><i class="fa fa-plus"></i></button>
-	</div>
 </nav>
 <!-- this is for background -->
 <div class="wrapper bg-dark" id="admin">
@@ -20,11 +20,12 @@
 			<ul class="nav nav-tabs bg-dark" id='tag_list' >
                 {% for cate_name in all_category %}
 				{% if cate_name[0] == all_category[0][0] %}
-                <li class="tag_item"><a href="#" class="nav-link active">{{cate_name[0]}}</a></li>
+                <li class="update_tab tag_item"><a href="#" class="nav-link active">{{cate_name[0]}}</a></li>
 				{% else %}
-				<li class="tag_item"><a href="#" class="nav-link text-light">{{cate_name[0]}}</a></li>
+				<li class="update_tab tag_item"><a href="#" class="nav-link text-light">{{cate_name[0]}}</a></li>
                 {% endif %}
 				{% endfor %}
+				<li class="add_new_tabs"><a href="#" class="nav-link text-light"><i class="fa fa-plus"></i></a></li>
 			</ul>
 
 			<div id='replace_all' style='width:100%'>

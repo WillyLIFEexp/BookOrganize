@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, url_for, jsonify, send_from_directory
 from flask_bootstrap import Bootstrap
 from funs.new_connect import MySql
 
-import os
 import json
+import pandas as pd
+import os
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -130,6 +131,27 @@ def remove_card():
     return jsonify({'new_book_list': nth_page_books_info})
 
 
+@app.route('/outputCSV')
+def outputCSV():
+    """
+    Output CSV files
+    :return:
+    """
+    cols = ['Index', 'pre_cat', '編號', '書名', '總數量', '借出數量', 'cat', '顯示狀態']
+    temp_df = pd.DataFrame(m.get_everything(), columns=cols)
+    temp_df['書分類'] = temp_df['pre_cat'] + temp_df['cat']
+    temp_df['顯示狀態'] = temp_df['顯示狀態'].apply(lambda x: '顯示' if 1 else '不顯示')
+    all_df = temp_df[['書分類', '編號', '書名', '總數量', '借出數量', '顯示狀態']]
+    sheet_lists = all_df['書分類'].unique()
+    writer = pd.ExcelWriter('all_books.xlsx', engine='xlsxwriter')
+    for sheet_name in sheet_lists:
+        tmp = all_df[all_df['書分類'] == sheet_name]
+        tmp.to_excel(writer, sheet_name=sheet_name, index=False)
+    writer.save()
+
+    return send_from_directory(directory=os.path.dirname(os.path.abspath(__file__)), filename='all_books.xlsx',
+                               as_attachment=True)
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='5000', debug=True, threaded=True)
-

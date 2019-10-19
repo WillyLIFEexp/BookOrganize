@@ -91,7 +91,6 @@ $(document).ready(function() {
               })
           .done(function(data){
                 return_books = data.return_book_info
-//                new_content = create_card(return_book_info)
                 if ($('div.wrapper').is('#admin')){
                     var new_content = admin_create_card(return_books,return_books.length)
                 }
@@ -104,7 +103,7 @@ $(document).ready(function() {
           })
     })
     // Create new book
-        $(document).on('click','.new', function(){
+    $(document).on('click','.new', function(){
           cur_box = $(this).parent().siblings().children()
           book_prefix_cat = $(cur_box[0]).children()[0].value
           book_num = $(cur_box[1]).children()[0].value
@@ -133,14 +132,13 @@ $(document).ready(function() {
               else{
                   content += create_cards(return_books,return_books.length)
               }
-//              content += create_cards(return_books,return_books.length)
               content += "</div>"
               content += create_one_pages(return_pages)
               $('#replace_all').empty().append(content)
           })
     })
     // remove a book
-        $(document).on('click','.remove', function(){
+    $(document).on('click','.remove', function(){
           cur_box = $(this).parent().parent()
           page_num = $('button.current')[0].textContent
           book_prefix_cat = $('a.active')[0].text
@@ -165,6 +163,15 @@ $(document).ready(function() {
                 }
                 $('#forcards').empty().append(content)
           })
+    })
+
+    // adding new tab
+    $(document).on('dblclick','.add_new_tabs', function(){
+          console.log("hi")
+    })
+    // update tab
+    $(document).on('dblclick','.update_tab', function(){
+          console.log("hi")
     })
 
 });
