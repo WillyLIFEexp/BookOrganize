@@ -51,6 +51,19 @@ def add_card():
     return jsonify({'new_book_list': nth_page_books_info, 'page_num': int(last_page)})
 
 
+@app.route('/add_tab', methods=['POST'])
+def add_tab():
+    """
+    Adding a new cat.
+    :return:
+    """
+    new_tag_name = request.form['new_tag']
+    m.insert_new_cat(new_tag_name[:2], new_tag_name[2:])
+    category_list = m.get_all_cat_tags()
+    cat_name = new_tag_name[2:]
+    return jsonify({'cat_list': category_list,'cat_name': cat_name})
+
+
 @app.route('/get_a_book', methods=['POST'])
 def get_a_book():
     """
@@ -100,6 +113,21 @@ def change_whole():
     return jsonify({'new_book_list': filtered_first_page_cards, 'new_page_count': filtered_page_num})
 
 
+@app.route('/change_tab', methods=['POST'])
+def change_tab():
+    """
+    Edit old tab
+    :return:
+    """
+    edit_tag_name = request.form['edit_tag_name']
+    edit_tag_id = request.form['edit_tag_id']
+    m.update_old_cat(edit_tag_name[:2], edit_tag_name[2:], int(edit_tag_id))
+    category_list = m.get_all_cat_tags()
+    cat_name = edit_tag_name[2:]
+    filtered_first_page_cards, filtered_page_num = m.get_first_page_books(cat_name)
+    return jsonify({'cat_list': category_list, 'new_book_list': filtered_first_page_cards, 'new_page_count': filtered_page_num, 'cat_name':cat_name})
+
+
 @app.route('/update_info', methods=['POST'])
 def update_info():
     """
@@ -144,6 +172,7 @@ def outputCSV():
     all_df = temp_df[['書分類', '編號', '書名', '總數量', '借出數量', '顯示狀態']]
     sheet_lists = all_df['書分類'].unique()
     writer = pd.ExcelWriter('all_books.xlsx', engine='xlsxwriter')
+    # writer = pd.ExcelWriter('/home/gunter888/book_keep/all_books.xlsx', engine='xlsxwriter')
     for sheet_name in sheet_lists:
         tmp = all_df[all_df['書分類'] == sheet_name]
         tmp.to_excel(writer, sheet_name=sheet_name, index=False)

@@ -76,14 +76,14 @@
   margin-top: 30vh;
   border: 1px solid #888;
   width: 20vw;
-  height: 40vh;
   border-radius:30px;
 }
 
 .edit_modal_content p{
   display:flex;
   flex-direction:column;
-  margin:10% 8%;
+  margin: 1vh 2vw;
+  margin-top: 5vh
 }
 
 .edit_modal_content p span{
@@ -98,12 +98,15 @@
 
 .two_btn{
   position:relative;
-  left:10vw;
-  top:4vh;
+  left:8vw;
 }
 
 .one_btn{
   position:relative;
-  left:15vw;
-  top:4vh;
+  left:11vw;
+}
+
+.hrline{
+   display:block;
+   border-top: 1px solid #ccc
 }

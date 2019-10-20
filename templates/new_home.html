@@ -21,9 +21,9 @@
 			<ul class="nav nav-tabs bg-dark" id='tag_list' >
                 {% for cate_name in all_category %}
 				{% if cate_name[0] == all_category[0][0] %}
-                <li class="tag_item"><a href="#" class="nav-link active">{{cate_name[0]}}</a></li>
+                <li class="update_tab tag_item" id="{{cate_name[0]}}" name="{{cate_name[1]}}"><a href="#" class="nav-link active">{{cate_name[2]}}</a></li>
 				{% else %}
-				<li class="tag_item"><a href="#" class="nav-link text-light">{{cate_name[0]}}</a></li>
+				<li class="update_tab tag_item" id="{{cate_name[0]}}" name="{{cate_name[1]}}"><a href="#" class="nav-link text-light">{{cate_name[2]}}</a></li>
                 {% endif %}
 				{% endfor %}
 			</ul>

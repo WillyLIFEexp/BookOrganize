@@ -7,7 +7,7 @@
     - Create a button to click for download (admin_page.html)
     - Function to get the data from database (main.py)
     - Return for user to download, and with multiple sheets(main.py)
-- [ ] Able to add new tabs and rename old tab
+- [x] Able to add new tabs and rename old tab
     - Create a new page for admin to connect (html, js)
     - Query from data base (new_connect.py)
 - [ ] Change Query methods to ORM
