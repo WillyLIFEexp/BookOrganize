@@ -133,45 +133,63 @@ function create_one_pages(page_number){
 
 //SQL Related
 function update_sql(cur_box){
-    if (cur_box[0].children[0].value == ''){
-         cat = cur_box[0].children[0].placeholder
-    }
-    else{
-         cat = cur_box[0].children[0].value
-    }
-
-    if (cur_box[1].children[0].value == ''){
-         num = cur_box[1].children[0].placeholder
-    }
-    else{
-         num = cur_box[1].children[0].value
-    }
-
     if (cur_box[2].children[0].value == ''){
-         title = cur_box[2].children[0].placeholder
+         cat = cur_box[2].children[0].placeholder
     }
-
     else{
-         title = cur_box[2].children[0].value
+         cat = cur_box[2].children[0].value
     }
 
     if (cur_box[3].children[0].value == ''){
-         count = cur_box[3].children[0].placeholder
+         num = cur_box[3].children[0].placeholder
     }
     else{
-         count = cur_box[3].children[0].value
+         num = cur_box[3].children[0].value
     }
-    index = cur_box[4].textContent
+
+    if (cur_box[4].children[0].value == ''){
+         title = cur_box[4].children[0].placeholder
+    }
+
+    else{
+         title = cur_box[4].children[0].value
+    }
+
+    if (cur_box[5].children[0].value == ''){
+         count = cur_box[5].children[0].placeholder
+    }
+    else{
+         count = cur_box[5].children[0].value
+    }
+    index = cur_box[6].textContent
     new_info = [cat, num, title, count, index]
     return new_info
 }
 
 function delete_sql(cur_box){
-    cat = cur_box[0].children[0].placeholder
-    num = cur_box[1].children[0].placeholder
+    cat = cur_box[2].children[0].placeholder
+    num = cur_box[3].children[0].placeholder
     title = '------------'
     count = 0
-    index = cur_box[4].textContent
+    index = cur_box[6].textContent
     new_info = [cat, num, title, count, index]
     return new_info
+}
+
+// Create Tags for admin
+function create_tags(tag_lists,cat_name){
+    var text_content = ""
+    for (z = 0; z<tag_lists.length; z++){
+        if(tag_lists[z][2] == cat_name){
+            console.log(tag_lists[z][2])
+            text_content += '<li class="update_tab tag_item" id=' + tag_lists[z][0] + ' name=' + tag_lists[z][1]+'>'
+            text_content += '<a href="#" class="nav-link active">' + tag_lists[z][2] + '</a></li>'
+        }
+        else{
+            text_content += '<li class="update_tab tag_item" id=' + tag_lists[z][0] + ' name=' + tag_lists[z][1]+'>'
+            text_content += '<a href="#" class="nav-link text-light">' + tag_lists[z][2] + '</a></li>'
+        }
+    }
+    text_content += '<li class="add_new_tabs"><a href="#" class="nav-link text-light"><i class="fa fa-plus"></i></a></li>'
+    return text_content
 }

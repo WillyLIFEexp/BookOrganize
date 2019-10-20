@@ -67,7 +67,7 @@ class MySql:
         """
 
         self.connect_again()
-        sql_code = "SELECT cat_name from book_cat_info"
+        sql_code = "SELECT id, cat_prefix, cat_name from book_cat_info"
         self.cur.execute(sql_code)
         all_tags_name = self.cur.fetchall()
         self.cur.close()
@@ -185,6 +185,47 @@ class MySql:
         self.my_db.commit()
         self.cur.close()
 
+    def insert_new_cat(self, prefix, name):
+        """
+        Insert new book cat to database
+        :param prefix: Cat's prefix
+        :param name: Cat's name
+        :return:
+        """
+        self.connect_again()
+        sql_code = '''
+                   insert into book_cat_info
+                   (`cat_prefix`, `cat_name`, `cat_total_counts`,`cat_total_pages`) 
+                   values
+                   (%s, %s, %s, %s)
+                   '''
+        val = [prefix, name, 0, 0]
+        self.cur.execute(sql_code, val)
+        self.my_db.commit()
+        self.cur.close()
+
+    def update_old_cat(self, prefix, name, id):
+        """
+        Update old cat name
+        :param prefix: new pre
+        :param name:
+        :return:
+        """
+        self.connect_again()
+        sql_code = '''
+                   update
+                   `book_cat_info`
+                   set
+                   `cat_prefix` = %s,
+                   `cat_name` = %s
+                   where
+                   `id` = %s
+                   '''
+        val = [prefix, name, id]
+        self.cur.execute(sql_code, val)
+        self.my_db.commit()
+        self.cur.close()
+
     def update_book_out_count(self, book_oid, action):
         """
         Depend on borrow or return, change the total count of out.
@@ -249,7 +290,6 @@ class MySql:
         sql_code = '''
                    UPDATE `book_info` SET `show_no_show` = '0' WHERE (`id` = %s);
                    '''
-        # sql_code = 'DELETE FROM `book_keeper`.`book_info` WHERE (`id` = %s);'
         self.cur.execute(sql_code, [book_oid])
         self.my_db.commit()
         self.cur.close()
